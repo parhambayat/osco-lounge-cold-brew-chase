@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import "tailwindcss";
+
+:root {
+  --neon-blue: #00FFFF;
+  --neon-pink: #FF006E;
+  --neon-green: #39FF14;
+  --neon-orange: #F97316;
+  --neon-yellow: #FFE600;
+  --dark-bg: #0a0a1a;
+  --darker-bg: #050510;
+  --game-border: #1a1a3a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--dark-bg);
+  color: white;
+  font-family: 'VT323', monospace;
+  overflow: hidden;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* CRT Scanlines overlay */
+.crt-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 100;
+}
+
+/* Neon text glow */
+.neon-text {
+  text-shadow:
+    0 0 7px var(--neon-blue),
+    0 0 10px var(--neon-blue),
+    0 0 21px var(--neon-blue),
+    0 0 42px #0080FF,
+    0 0 82px #0080FF;
+}
+
+.neon-text-pink {
+  text-shadow:
+    0 0 7px var(--neon-pink),
+    0 0 10px var(--neon-pink),
+    0 0 21px var(--neon-pink);
+}
+
+.neon-text-green {
+  text-shadow:
+    0 0 7px var(--neon-green),
+    0 0 10px var(--neon-green),
+    0 0 21px var(--neon-green);
+}
+
+.neon-text-orange {
+  text-shadow:
+    0 0 7px var(--neon-orange),
+    0 0 10px var(--neon-orange),
+    0 0 21px var(--neon-orange);
+}
+
+.neon-border {
+  box-shadow:
+    0 0 5px var(--neon-blue),
+    0 0 10px var(--neon-blue),
+    inset 0 0 5px rgba(0, 255, 255, 0.1);
+  border: 1px solid var(--neon-blue);
+}
+
+.neon-border-pink {
+  box-shadow:
+    0 0 5px var(--neon-pink),
+    0 0 10px var(--neon-pink),
+    inset 0 0 5px rgba(255, 0, 110, 0.1);
+  border: 1px solid var(--neon-pink);
+}
+
+/* Pixel-perfect game canvas */
+canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Pulse animation for buttons */
+@keyframes pulse-neon {
+  0%, 100% {
+    box-shadow:
+      0 0 5px var(--neon-orange),
+      0 0 10px var(--neon-orange),
+      0 0 20px var(--neon-orange);
+  }
+  50% {
+    box-shadow:
+      0 0 10px var(--neon-orange),
+      0 0 20px var(--neon-orange),
+      0 0 40px var(--neon-orange),
+      0 0 80px var(--neon-orange);
+  }
+}
+
+.pulse-btn {
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-anim {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.confetti {
+  position: fixed;
+  animation: confetti-fall linear forwards;
+  z-index: 50;
+  pointer-events: none;
+}
